@@ -1,46 +1,47 @@
 import * as actions from '../actions';
 
 const initialState = {
-    lists: [{
-        title: 'Example list 1',
-        cards: [{
-            text: 'Example card 1'
-        }, {
-            text: 'Example card 2'
-        }]
-    }, {
-        title: 'Example list 2',
-        cards: [{
-            text: 'Example card 1'
-        }, {
-            text: 'Example card 2'
-        }]
-    }]
+    boards: {}
+};
+
+const defaultBoard = {
+    lists: []
 };
 
 export const trelloReducer = (state=initialState, action) => {
     if (action.type === actions.ADD_LIST) {
+        const {title, boardId} = action;
+        const boards = state.boards;
+        const board = Object.assign({}, defaultBoard, boards[boardId]);
+        board.lists = [...board.lists, {
+            cards: [],
+            title
+        }];
         return Object.assign({}, state, {
-            lists: [...state.lists, {
-                title: action.title,
-                cards: []
-            }]
+            boards: Object.assign({}, boards, {
+                [boardId]: board
+            })
         });
     }
     else if (action.type === actions.ADD_CARD) {
-        let lists = state.lists.map((list, index) => {
-            if (index !== action.listIndex) {
+        const {text, boardId, listIndex} = action;
+        const boards = state.boards;
+        const board = Object.assign({}, defaultBoard, boards[boardId]);
+        board.lists = board.lists.map((list, index) => {
+            if (index !== listIndex) {
                 return list;
             }
             return Object.assign({}, list, {
                 cards: [...list.cards, {
-                    text: action.text
+                    text
                 }]
             });
         });
 
         return Object.assign({}, state, {
-            lists
+            boards: Object.assign({}, boards, {
+                [boardId]: board
+            })
         });
     }
     return state;

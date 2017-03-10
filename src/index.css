@@ -1,7 +1,19 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+html, body, main, #root, .chrome {
+    height: 100%;
+}
+
 body {
     font-family: sans-serif;
-    padding: 10px;
     background: #1976D2;
+}
+
+h1 {
+    margin: 10px;
 }
 
 h2, h3 {
@@ -12,8 +24,43 @@ h2 {
     color: white;
 }
 
+a {
+    text-decoration: none;
+}
+
 input {
     display: block;
+}
+
+header {
+    background-color: #0D47A1;
+    color: white;
+    margin-bottom: 20px;
+    position: absolute;
+    height: 64px;
+}
+
+main {
+    display: flex;
+}
+
+header a {
+    color: white;
+}
+
+.home-page, .board {
+    padding: 74px 10px 10px 10px;
+}
+
+
+.home-page {
+    align-self: center;
+    text-align: center;
+    width: 100%;
+}
+
+.home-page input {
+    margin: 1em auto 0 auto;
 }
 
 .lists {

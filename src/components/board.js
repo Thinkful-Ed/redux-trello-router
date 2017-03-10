@@ -9,17 +9,18 @@ import {addList} from '../actions';
 
 export class Board extends React.Component {
     addList(title) {
-        this.props.dispatch(addList(title));
+        this.props.dispatch(addList(title, this.props.params.boardId));
     }
 
     render() {
         const lists = this.props.lists.map((list, index) =>
-            <List key={index} index={index} {...list} />
+            <List key={index} index={index} boardId={this.props.params.boardId}
+                {...list} />
         );
 
         return (
             <div className="board">
-                <h2>{this.props.title}</h2>
+                <h2>{this.props.params.boardId}</h2>
                 <div className="lists">
                     {lists}
                     <AddForm type="list" onAdd={title => this.addList(title)} />
@@ -33,9 +34,14 @@ Board.defaultProps = {
     title: 'Board'
 };
 
-const mapStateToProps = state => ({
-    lists: state.lists
-});
+const mapStateToProps = (state, props) => {
+    const board = Object.assign({}, {
+        lists: []
+    }, state.boards[props.params.boardId]);
+    return {
+        lists: board.lists
+    };
+};
 
 export default connect(mapStateToProps)(Board);
 
