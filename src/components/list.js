@@ -8,15 +8,18 @@ import {addCard} from '../actions';
 
 export class List extends React.Component {
     addCard(text) {
-        this.props.dispatch(addCard(text, this.props.boardId, this.props.index));
+        console.log(text, this.props.boardId, this.props.index);
+        this.props.dispatch(
+            addCard(text, this.props.boardId, this.props.index)
+        );
     }
 
     render() {
-        const cards = this.props.cards.map((card, index) =>
+        const cards = this.props.cards.map((card, index) => (
             <li key={index}>
                 <Card {...card} />
             </li>
-        );
+        ));
         return (
             <div>
                 <h3>{this.props.title}</h3>

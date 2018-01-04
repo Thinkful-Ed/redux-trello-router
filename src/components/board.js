@@ -10,19 +10,23 @@ import './board.css';
 
 export class Board extends React.Component {
     addList(title) {
-        this.props.digsspatch(addList(title, this.props.match.params.boardId));
+        this.props.dispatch(addList(title, this.props.match.params.boardId));
     }
 
     render() {
-        const lists = this.props.lists.map((list, index) =>
-        <li className="list-wrapper" key={index}>
-            <List index={index} {...list} />
-        </li>
-        );
+        const lists = this.props.lists.map((list, index) => (
+            <li className="list-wrapper" key={index}>
+                <List
+                    index={index}
+                    boardId={this.props.match.params.boardId}
+                    {...list}
+                />
+            </li>
+        ));
 
         return (
             <div className="board">
-                <h2>Example board</h2>
+                <h2>{this.props.match.params.boardId}</h2>
                 <ul className="lists">
                     {lists}
                     <li className="add-list-wrapper">
@@ -42,13 +46,16 @@ Board.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-    const board = Object.assign({}, {
-        lists: []
-    }, state.boards[props.match.params.boardId]);
+    const board = Object.assign(
+        {},
+        {
+            lists: []
+        },
+        state.boards[props.match.params.boardId]
+    );
     return {
         lists: board.lists
     };
 };
 
 export default connect(mapStateToProps)(Board);
-
