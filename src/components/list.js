@@ -8,7 +8,6 @@ import {addCard} from '../actions';
 
 export class List extends React.Component {
     addCard(text) {
-        console.log(text, this.props.boardId, this.props.index);
         this.props.dispatch(
             addCard(text, this.props.boardId, this.props.index)
         );
